@@ -117,8 +117,8 @@ if `FALSE` functions are loaded, but no code is executed
 Regions are sets of populations that can be analyzed independently, i.e. they correspond
 to clusters that a priory are thought to have a different origin.
 Each list entry corresponds to an analysis, i. e. the following command
- will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
- also jointly analyze `REGION_1` and `REGION_2`.
+will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
+also jointly analyze `REGION_1` and `REGION_2`.
     regions_to_analyze <- list("REGION_1", "REGION_2", "REGION_3", 
                         c("REGION_1", "REGION_2"))
 
@@ -133,20 +133,20 @@ for 3.1.1, but this should work for older versions of R)
     ploidy <- 2  #set ploidy of individuals. 1=haploid, 2 =diploid
 
 which columns contain outgroup individuals (snapp format)
- to be used for polarization of SNPs. If SNP are already polarized
- or no outgroups are present, set this to `NULL`:
+to be used for polarization of SNPs. If SNP are already polarized
+or no outgroups are present, set this to `NULL`:
     # outgroup_columns <- NULL 
     outgroup_columns <- 1:2  
 
- the maximum number of snp to analyze, NULL loads all SNP
+the maximum number of snp to analyze, NULL loads all SNP
     nsnp <- NULL
 
- if you want to run the arabidopsis example instead, set this to True
+if you want to run the arabidopsis example instead, set this to True
 , file names will be adjusted
     run_arabidopsis_example <- TRUE
 
 
- downloads arabidopsis data, requires wget. As the arabidopsis data set is around
+downloads arabidopsis data, requires wget. As the arabidopsis data set is around
 400MB, I did not include it, run this *once* to download the data
     download_arabidopsis_data <- FALSE
 
