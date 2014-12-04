@@ -8,14 +8,14 @@ and Peter & Slatkin, biorXiv
 
 if you are interested in analysing a data set, please
 check out the pipeline below. If you just want to 
-calculate `psi` from allelic data, check out the next paragraph.
+calculate ψ from allelic data, check out the next paragraph.
 
 
-### calculation of `\psi`
+### calculation of ψ 
  
 the script implents a basic pipeline from a genetic data
 set to a graphical output. *If you are only interested in
-calculating the `\psi` statistic, use the `get_psi` function in
+calculating the ψ statistic, use the `get_psi` function in
 re_functions.r*
 
 the parameters for the function are:
