@@ -130,6 +130,7 @@ also jointly analyze `REGION_1` and `REGION_2`.
 if `TRUE`, heterozygostity and FST plots are generated (note that I use BEDASSLE
 to calculate pairwise FST, and that BEDASSLE is, as of Dec 3 2014, not yet available
 for 3.1.1, but this should work for older versions of R)
+
     run_additional_analyses <- FALSE
 
     n_points <- 4   #how many points on the map should be evaluated
