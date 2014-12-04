@@ -319,11 +319,8 @@ print( "finished step 2")
 #               population and sample size for each
 #--------------------------------------------------
 pop_data <- make_pop_data_from_pops( pops, data )
-print( "finished step 3")
 pop_coords <- make_pop_coords_from_pops( pops, coords)
-print( "finished step 3")
 pop_ss <- make_pop_ss_from_pops( pops, data, ploidy=ploidy)
-print( "finished step 3")
 pop_coords <- cbind( pop_coords, hets=get_heterozygosity(pop_data))
 
 print( "finished step 3")

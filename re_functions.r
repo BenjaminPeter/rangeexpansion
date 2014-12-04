@@ -44,7 +44,7 @@ read_data_arab <- function(snp_file="athal_snps_031110_agdp",
 
     print("finished reading main data file")
 
-    coords <<- read.csv(coords_file, header=T, strings=F)
+    coords <- read.csv(coords_file, header=T, strings=F)
     print("finished reading other data file")
 
     data <- polarize_data( data, outgroup_file )
@@ -59,6 +59,8 @@ read_data_arab <- function(snp_file="athal_snps_031110_agdp",
     data <<- data[,data.ordering]
     coords$ecotype_id <- paste0("X",coords$ecotype_id)
     coords$id <- coords$ecotype_id
+
+    coords <<- coords
 }
 
 get_snp_state <- function(snp_csv_file, snp_annotation_file){
