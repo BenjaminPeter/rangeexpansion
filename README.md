@@ -17,11 +17,12 @@
  The script works by loading all data into
  memory so make sure that the computer you are 
  running it on has enough RAM.
-####################################################
+
+I am currently moving comments and documentation from
+re_analysis.r to this readme file, so please also check
+the initial comments there.
 
 
-
-####################################################
 ## File format descriptions 
 ####################################################
  there are two required files and on optional file:
@@ -102,25 +103,28 @@ the command line as the first two arguments, i.e. running
 the name of the input file, 
     snp_file <- "example_data/example_snp.snapp"
 
-#the name of the file specifying location, with extension
+the name of the file specifying location, with extension
     coords_file <- "example_data/example_coordinates.csv" #replaced by cmdline arg 2
 
-#whether data set needs to be loaded
-    load_data <- T  
+whether data set needs to be loaded, if they are already in the R environment, setting
+this to `FALSE` will save a lot of time
+    load_data <- True
 
-#if false, only functions are loaded
-    run_analysis <- T  
+if `FALSE` functions are loaded, but no code is executed
+    run_analysis <- True
 
-# each list entry is a set of populations to analyze independently, i.e this
-# will analyze the populations REGION_1, REGION_2 and REGION_3 individually, but will
-# also jointly analyze REGION_1 and REGION_2.
+##### Regions
+Regions are sets of populations that can be analyzed independently, i.e. they correspond
+to clusters that a priory are thought to have a different origin.
+Each list entry corresponds to an analysis, i. e. the following command
+ will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
+ also jointly analyze `REGION_1` and `REGION_2`.
     regions_to_analyze <- list("REGION_1", "REGION_2", "REGION_3", 
                         c("REGION_1", "REGION_2"))
 
-# if you instead want to infer populations from location, set this to
-#pop_to_analyze <- "infer from location"
-
-#if TRUE, heterozygostity and FST plots are generated
+if `TRUE`, heterozygostity and FST plots are generated (note that I use BEDASSLE
+to calculate pairwise FST, and that BEDASSLE is, as of Dec 3 2014, not yet available
+for 3.1.1, but this should work for older versions of R)
     run_additional_analyses <- FALSE
 
     n_points <- 4   #how many points on the map should be evaluated
@@ -128,21 +132,22 @@ the name of the input file,
 
     ploidy <- 2  #set ploidy of individuals. 1=haploid, 2 =diploid
 
-#which columns contain outgroup individuals (snapp format)
-# to be used for polarization of SNPs. If SNP are already polarized
-# or no outgroups are present, set this to `NULL`:
-# outgroup_columns <- NULL 
+which columns contain outgroup individuals (snapp format)
+ to be used for polarization of SNPs. If SNP are already polarized
+ or no outgroups are present, set this to `NULL`:
+    # outgroup_columns <- NULL 
     outgroup_columns <- 1:2  
 
-# the maximum number of snp to analyze, NULL loads all SNP
+ the maximum number of snp to analyze, NULL loads all SNP
     nsnp <- NULL
 
-# if you want to run the arabidopsis example instead, set this to True
-#, file names will be adjusted
+ if you want to run the arabidopsis example instead, set this to True
+, file names will be adjusted
     run_arabidopsis_example <- TRUE
 
 
-# downloads arabidopsis data, requires wget
+ downloads arabidopsis data, requires wget. As the arabidopsis data set is around
+400MB, I did not include it, run this *once* to download the data
     download_arabidopsis_data <- FALSE
 
 
