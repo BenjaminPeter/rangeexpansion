@@ -19,6 +19,8 @@ calculating the ψ statistic, use the `get_psi` function in
 re_functions.r*
 
 the parameters for the function are:
+
+
     Parameters:                                        
         - fi : vector of int                           
              - vector of derived allele counts for each 
