@@ -19,20 +19,20 @@ calculating the ψ statistic, use the `get_psi` function in
 re_functions.r*
 
 the parameters for the function are:
-   Parameters:                                        
-       - fi : vector of int                           
-           - vector of derived allele counts for each 
+    Parameters:                                        
+        - fi : vector of int                           
+             - vector of derived allele counts for each 
                snp in population i                    
-       - fj : vector of int                           
-           - vector of derived allele counts for each 
+        - fj : vector of int                           
+             - vector of derived allele counts for each 
                snp in population j                    
-       - ni : vector of int                           
-           - vector of total number of genotypes in   
+        - ni : vector of int                           
+             - vector of total number of genotypes in   
                population i                           
-       - nj : vector of int                           
-           - vector of total number of genotypes in   
+        - nj : vector of int                           
+             - vector of total number of genotypes in   
                population j                           
-       -n : the number of samples to downsample to    
+         -n : the number of samples to downsample to    
 
 all vectors have length equal to the number of snp
 
