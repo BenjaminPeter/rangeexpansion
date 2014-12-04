@@ -1,9 +1,45 @@
 # Range Expansion analysis
 ####################################################
- this script serves as an example on how to analyze
- range expansion data, how to infer the origin and 
- to infer the strength of the founder effect. 
+this script serves as an example on how to analyze
+range expansion data, how to infer the origin and 
+to infer the strength of the founder effect. Details
+of the methods are found in Peter & Slatkin (2013), Evolution
+and Peter & Slatkin, biorXiv
+
+if you are interested in analysing a data set, please
+check out the pipeline below. If you just want to 
+calculate `psi` from allelic data, check out the next paragraph.
+
+
+### calculation of `\psi`
  
+the script implents a basic pipeline from a genetic data
+set to a graphical output. *If you are only interested in
+calculating the `\psi` statistic, use the `get_psi` function in
+re_functions.r*
+
+the parameters for the function are:
+   Parameters:                                        
+       - fi : vector of int                           
+           - vector of derived allele counts for each 
+               snp in population i                    
+       - fj : vector of int                           
+           - vector of derived allele counts for each 
+               snp in population j                    
+       - ni : vector of int                           
+           - vector of total number of genotypes in   
+               population i                           
+       - nj : vector of int                           
+           - vector of total number of genotypes in   
+               population j                           
+       -n : the number of samples to downsample to    
+
+all vectors have length equal to the number of snp
+
+
+
+### Pipeline
+
  there are two data sets:
  1. the Arabidopsis thaliana data set, by Bergelson et al.,
  available on their website
