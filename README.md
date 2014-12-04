@@ -101,16 +101,20 @@ the command line as the first two arguments, i.e. running
     Rscript re_analysis.r [snp_file] [coords_file]
 
 the name of the input file, 
+
     snp_file <- "example_data/example_snp.snapp"
 
 the name of the file specifying location, with extension
+
     coords_file <- "example_data/example_coordinates.csv" #replaced by cmdline arg 2
 
 whether data set needs to be loaded, if they are already in the R environment, setting
 this to `FALSE` will save a lot of time
+
     load_data <- True
 
 if `FALSE` functions are loaded, but no code is executed
+
     run_analysis <- True
 
 ##### Regions
@@ -119,6 +123,7 @@ to clusters that a priory are thought to have a different origin.
 Each list entry corresponds to an analysis, i. e. the following command
 will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
 also jointly analyze `REGION_1` and `REGION_2`.
+
     regions_to_analyze <- list("REGION_1", "REGION_2", "REGION_3", 
                         c("REGION_1", "REGION_2"))
 
@@ -136,18 +141,22 @@ which columns contain outgroup individuals (snapp format)
 to be used for polarization of SNPs. If SNP are already polarized
 or no outgroups are present, set this to `NULL`:
     # outgroup_columns <- NULL 
+
     outgroup_columns <- 1:2  
 
 the maximum number of snp to analyze, NULL loads all SNP
+
     nsnp <- NULL
 
 if you want to run the arabidopsis example instead, set this to True
 , file names will be adjusted
+
     run_arabidopsis_example <- TRUE
 
 
 downloads arabidopsis data, requires wget. As the arabidopsis data set is around
 400MB, I did not include it, run this *once* to download the data
+
     download_arabidopsis_data <- FALSE
 
 
