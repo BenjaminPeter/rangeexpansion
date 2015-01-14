@@ -328,7 +328,7 @@ get_psi <- function (ni, nj, fi, fj,
         poly_mat[n+1,n+1] <- 0
 
         #psi_mat is the contribution to psi for each entry
-        psi_mat <- outer(0:n,0:n,FUN=function(x,y)(x-y))
+        psi_mat <- outer(0:n,0:n,FUN=function(x,y)(y-x))
         psi_mat[1,] <- 0
         psi_mat[,1] <- 0
 
