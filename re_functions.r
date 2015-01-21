@@ -376,6 +376,7 @@ make_pops <- function( coords, n=2 ){
 
     #get all populations from sample data
     pops <- get_pops_w_multiple_samples(coords,n)
+    return(pops)
 }
 
 #makes a pop list with one entry per pop, use this for individual
@@ -729,14 +730,15 @@ run_region <- function( region, loc_file_id=out_file_id,
 
 
 
-do_pca <- function(pop_data, pop_coords){
+do_pca <- function(pop_data, pop_coords,...){
     plt <- palette()
     palette(c("black", "pink", "blue", "brown", "black", "cyan", "lightblue",
               "red", "orange", "darkgreen","darkgreen","darkgreen"))
 
     pop_data_n <- apply(pop_data,1,function(x)x/pop_coords$n) 
-    p <- prcomp(pop_data_n[,1:100000]) 
-    plot(p$x, col=pop_coords$pop, pch=15)
+    p <- prcomp(pop_data_n[,1:min(100000,nrow(pop_data))]) 
+    plot(p$x,  pch=15,col="white",...)
+    text(p$x, label=pop_coords$id,  pch=15)
     palette(plt)
 }
 
