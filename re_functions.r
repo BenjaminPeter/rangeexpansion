@@ -771,3 +771,8 @@ get_heterozygosity <- function( pop_data ){
     hets <- colMeans(pop_data==1, na.rm=T)
     hets
 }
+
+hets <- function(x)x * (1-x)
+get_heterozygosity <- function( pop_data, pop_ss){
+	colMeans(hets(pop_data/pop_ss))
+}
