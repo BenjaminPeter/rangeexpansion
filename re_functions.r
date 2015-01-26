@@ -274,7 +274,7 @@ get_all_psi <- function(pop_data, pop_ss, n=2,
             fj <- pop_data[,jj]
             mat[j,i] <- get_psi( ni, nj, fi, fj, 
                                 resampling=resampling, n=n )
-            mat[i,j] <- -mat[i,j]
+            mat[i,j] <- -mat[j,i]
 	    print( c(ii, jj))
         }
     }
@@ -775,4 +775,8 @@ get_heterozygosity <- function( pop_data ){
 hets <- function(x)x * (1-x)
 get_heterozygosity <- function( pop_data, pop_ss){
 	colMeans(hets(pop_data/pop_ss))
+}
+
+permute_data <- function(data, n_permutations){
+
 }
