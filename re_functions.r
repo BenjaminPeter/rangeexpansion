@@ -275,7 +275,7 @@ get_all_psi <- function(pop_data, pop_ss, n=2,
             mat[j,i] <- get_psi( ni, nj, fi, fj, 
                                 resampling=resampling, n=n )
             mat[i,j] <- -mat[j,i]
-	    print( c(ii, jj))
+	    #print( c(ii, jj))
         }
     }
     
@@ -777,6 +777,35 @@ get_heterozygosity <- function( pop_data, pop_ss){
 	colMeans(hets(pop_data/pop_ss))
 }
 
-permute_data <- function(data, n_permutations){
+permute_data <- function(data, pops, n_permutations=1000){
+    permutation_matrix <- sapply(1:n_permutations, 
+                                 function(x)sample(1:ncol(data)))
+    permutations <- array(0, dim=c(dim(all_psi), n_permutations))
 
+    for( i in 1:n_permutations){
+        per_data <- make_pop_data_from_pops(pops, data[permutation_matrix[,i]])
+        per_ss <- make_pop_ss_from_pops(pops, data[permutation_matrix[,i]])
+        permuted_psi <- get_all_psi(per_data, per_ss)
+        permutations[,,i] = permuted_psi
+        print(i)
+    }
+
+    permutations
+}
+
+test_ibd <- function(data, all_psi, pops, n_permutations=1000){
+    permuted_data <- permute_data(data, pops, n_permutations)
+    n_samples <- dim(all_psi)[1]
+    res <- c()
+    for( i in 1:(n_samples-1)){
+        for (j in (i+1):n_samples){
+            l <- sum(all_psi[i,j] < permuted_data[i,j,])
+            u <- sum(all_psi[i,j] > permuted_data[i,j,])
+            res <- rbind(res, c(i,j, min(l, u)))
+        }
+    }
+    q <- list()
+    q[['indiv']] = res
+    q[['p']] = sum(res[,3]) / (nrow(res) * n_permutations)
+    return(q)
 }
