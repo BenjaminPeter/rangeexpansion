@@ -272,9 +272,9 @@ get_all_psi <- function(pop_data, pop_ss, n=2,
             nj <- pop_ss[,jj]
             fi <- pop_data[,ii]
             fj <- pop_data[,jj]
-            mat[i,j] <- get_psi( ni, nj, fi, fj, 
+            mat[j,i] <- get_psi( ni, nj, fi, fj, 
                                 resampling=resampling, n=n )
-            mat[j,i] <- -mat[i,j]
+            mat[i,j] <- -mat[i,j]
 	    print( c(ii, jj))
         }
     }
