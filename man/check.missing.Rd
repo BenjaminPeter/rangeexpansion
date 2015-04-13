@@ -25,11 +25,17 @@ the arguments \code{...} should be unnamed, and dispatch is on the
 first argument.
 }
 \examples{
-region <- list(NULL, c("REGION_1", "REGION_2"))
+
+
+example.data <- system.file("examples/example_snp.snapp",
+                            package="rangeExpansion")
+example.coords <- system.file("examples/example_coordinates.csv",
+                            package="rangeExpansion")
 
 raw.data <- load.data.snapp("examples/example_snp.snapp", 
                             "examples/example_coordinates.csv", 
                             sep=',', ploidy=ploidy)                                
+region <- list(NULL, c("REGION_1", "REGION_2"))
 
 pop <- make.pop(raw.data, ploidy)
 psi <- get.all.psi(pop)
