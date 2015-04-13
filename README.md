@@ -15,6 +15,7 @@ The current version uses the snpStats package from
 Bioconductor to handle SNP data efficiently. See
 http://www.bioconductor.org/packages/release/bioc/html/snpStats.html
 on how to install it. In brief, you should be able to run
+
     source("http://bioconductor.org/biocLite.R")
     biocLite("snpStats")
     library(snpStats)
