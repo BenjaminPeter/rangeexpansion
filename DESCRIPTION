@@ -6,7 +6,7 @@ Description: This package implements some of the methods used for the analysis o
 Depends: R (>= 3.1.1)
 License: Creative Commons Attribution
 LazyData: true
-Imports:
+Depends:
      snpStats,
     rworldmap,
     rworldxtra,
