@@ -17,10 +17,11 @@ example.data <- system.file("examples/example_snp.snapp",
 example.coords <- system.file("examples/example_coordinates.csv",
                             package="rangeExpansion")
 
+region <- list(NULL, c("REGION_1", "REGION_2"))
+ploidy <- 2
 raw.data <- load.data.snapp(example.data,
                             example.coords,
                             sep=',', ploidy=ploidy)                                
-region <- list(NULL, c("REGION_1", "REGION_2"))
 
 pop <- make.pop(raw.data, ploidy)
 psi <- get.all.psi(pop)
