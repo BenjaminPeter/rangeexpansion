@@ -39,8 +39,8 @@ example.data <- system.file("examples/example_snp.snapp",
 example.coords <- system.file("examples/example_coordinates.csv",
                             package="rangeExpansion")
 
-raw.data <- load.data.snapp("examples/example_snp.snapp", 
-                            "examples/example_coordinates.csv", 
+raw.data <- load.data.snapp(example.data,
+                            example.coords,
                             sep=',', ploidy=ploidy)                                
 region <- list(NULL, c("REGION_1", "REGION_2"))
 

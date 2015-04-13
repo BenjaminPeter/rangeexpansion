@@ -4,7 +4,7 @@
 \alias{summary.origin.results}
 \title{given output from single.origin, finds the origin}
 \usage{
-summary.origin.results(res)
+\method{summary}{origin.results}(res)
 }
 \arguments{
 \item{res}{an object of type origin.results to be summarized}
