@@ -651,6 +651,7 @@ model.1d <- function(xy, data, pct=0.01, f.dist="haversine"){
 #' @param res an object of type origin.results to be summarized
 #' @return a data frame with some summary statistics and the
 #'    most likely origin
+#' @export
 summary.origin.results <- function(res){
     bbox <- res$bbox
     orig <- which(t(res[[2]])==max((res[[1]]>0)*res[[2]],
@@ -678,6 +679,13 @@ summary.origin.results <- function(res){
     return(res.data)
 }
 
+
+#' summarizes origin.result.list object
+#' given output from origin inference, returns a table with statistics
+#' @param res an object of type origin.results to be summarized
+#' @return a data frame with some summary statistics and the
+#'    most likely origin
+#' @export
 summary.origin.result.list <- function(res){
     a <- sapply(res$tbl, summary)
     a <- data.frame(a)
@@ -687,6 +695,13 @@ summary.origin.result.list <- function(res){
     return(a)
 }
 
+#' plots a set of origin-inference results
+#'
+#' simply loops over all different regions and calls the plot function
+#' for all of them
+#' @param res an object of type origin.result.list
+#' @param ... further objects passed. to plot.origin.result
+#' @export
 plot.origin.result.list <- function(res, ...){
     lab <- sapply(res$regions, paste, collapse="+")
     lab[lab==""] <- "ALL"
