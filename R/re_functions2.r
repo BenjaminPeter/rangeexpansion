@@ -595,7 +595,6 @@ single.origin <- function(tdoa.data, bbox,  pop.coords,
             d0[i, j] <- mdl$f.e
             rsq[i, j] <- mdl$rsq
             mdlq[[i]][[j]] <- mdl
-            print(i)
         }
     }
     res <- list( d0=d0, rsq=rsq, mdlq=mdlq, bbox=bbox, xlen=xlen, 
