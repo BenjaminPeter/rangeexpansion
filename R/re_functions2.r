@@ -1,6 +1,11 @@
 require(snpStats)
 require(geosphere)
 
+#' @import snpStats
+#' @import geosphere
+#' @import rworldmap
+NULL
+
 #' Reads VCF File
 #'
 read.data.vcf <- function(){

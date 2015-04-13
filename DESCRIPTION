@@ -1,7 +1,8 @@
 Package: rangeExpansion
 Title: Estimate the origin of a range expansion
 Version: 0.0.0.9000
-Authors@R: person("Ben", "Peter", , "bp@berkeley.edu", role = c("aut", "cre"))
+Author: person("Ben", "Peter", , "bp@berkeley.edu", role = c("aut", "cre"))
+Maintainer:  Ben Peter <bp@berkeley.edu>
 Description: This package implements some of the methods used for the analysis of range expansions in the Evolution papers of Peter \& Slatkin (2013) and Peter \& Slatkin (2015)
 Depends: R (>= 3.1.1)
 License: Creative Commons Attribution
