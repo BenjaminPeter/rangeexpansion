@@ -1,22 +1,85 @@
 # Range Expansion analysis
 ####################################################
-this script serves as an example on how to analyze
+this package serves as an example on how to analyze
 range expansion data, how to infer the origin and 
 to infer the strength of the founder effect. Details
 of the methods are found in Peter & Slatkin (2013), Evolution
-and Peter & Slatkin, biorXiv
+and Peter & Slatkin (2015), Evolution
 
-if you are interested in analysing a data set, please
-check out the pipeline below. If you just want to 
-calculate ψ from allelic data, check out the next paragraph.
+The major uses of the package are to either test
+isolation-by-distance on some sets of populations, or
+to infer the origin of an expansion, and possibly the
+strength of a founder effect.
 
+The current version uses the snpStats package from
+Bioconductor to handle SNP data efficiently. See
+http://www.bioconductor.org/packages/release/bioc/html/snpStats.html
+on how to install it.
+
+
+### File Format Descriptions & Modifiers
+- the required files are genetic data in the plink
+.bed/.bim/.fam file format. 
+- In addition, we require a file containing information on the geographical
+sampling coordinates, and possibly other information
+
+ The data formats are the following:
+###### snp_file (bed format)
+see http://pngu.mgh.harvard.edu/~purcell/plink2/formats.html
+for reference. This file is perhaps easiest generated using
+plink 1.9. For example, from vcf data, use
+plink --vcf my.vcf --set-missing-var-ids "@_#" --make-bed --out new --allow-extra-chr
+to generate a bed file.
+###### coords_file 
+a tab-delimited file with a header (first row)
+(first row). Headers are (by default specified as follows):
+- individual (or 1st column): is the id of the individual
+- longitude: the longitude or x-coordinate of sample location
+- latitude: the latitude or y-coordinate of the sample
+- outgroup (optional): Whether the individual should be treated as an outgroup
+to polarize SNP
+- region (optional): In the case of multiple origins, this allows for an
+factor for which individuals are included in a given run
+- population (optional): If custom population assignments are chosen, the 
+value here assigns individuals to a population
+- country (optional): The country of origin.
+
+
+### Pipeline Overview:
+there are three main steps to this program: 
+1. data is loaded from individuals, then population level
+ data is generated from individual level data
+2. After that, a directionalit statistc is calculated 
+ for all pairs of populations, and a file with the 
+ location for each population is generated. 
+3. These population matrices are used for the actual inference
+
+### Modelling decisions and options
+
+###### Outgroups
+Outgroup Individuals are individuals assumed to be ancestral to the population of interest.
+Their alleles can be used to determine the most likely ancestral state of an allele.
+If more than one outgroup is specified, there might be disagreements between the state
+of the outgroup. In this case, there are two options:
+    outgroup.disagreement = 'remove' #removes SNP whose ancestral state is ambiguous
+    outgroup.disagreement = 'majority' # remove ties, keep SNP with majority for an allele
+######    Regions
+Regions are sets of populations that can be analyzed independently, i.e. they correspond
+to clusters that a priory are thought to have a different origin.
+Each list entry corresponds to an analysis, i. e. the following command
+will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
+also jointly analyze `REGION_1` and `REGION_2`.
+
+    regions_to_analyze <- list("REGION_1", "REGION_2", "REGION_3", 
+                        c("REGION_1", "REGION_2"))
+
+######    Bounding box
 
 ### calculation of ψ 
  
 the script implents a basic pipeline from a genetic data
-set to a graphical output. *If you are only interested in
-calculating the ψ statistic, use the `get_psi` function in
-re_functions.r*
+set to a graphical output. If you are only interested in
+calculating the ψ statistic, use the `get_psi` function
 
 the parameters for the function are:
 
@@ -38,73 +101,7 @@ the parameters for the function are:
 
 all vectors have length equal to the number of snp
 
-
-
 ### Pipeline
-
- there are two data sets:
- 1. the Arabidopsis thaliana data set, by Bergelson et al.,
- available on their website
- http://bergelson.uchicago.edu/regmap-data/, which I
- analyze in my biorxiv paper.
-
- 2. a dummy data set with the same input format as 
- snapp, which is (hopefully) easyier to generate and
- intended to be used for other analyses.
- 
- The script works by loading all data into
- memory so make sure that the computer you are 
- running it on has enough RAM.
-
-I am currently moving comments and documentation from
-re_analysis.r to this readme file, so please also check
-the initial comments there.
-
-
-## File format descriptions 
-####################################################
- there are two required files and on optional file:
- 1. snp_file, containing the genetic data
- 2. coords_file, containing location information
- 3. outgroup_file (optional) contains outgroup info
-
- The data formats are the following:
-
- 1a) snp_file (arabidopsis):
- in arabidopsis
- each row is a SNP, each column except the first
- three an individual.
-   first row is a header with individual ids, preceeded
-       by an X to allow for numerical ids.
-   first 3 columns are:
-   1: SNP id
-   2: chromosome
-   3: snp position
-
- 1b) snp_file (snapp, default),
- each row is an individual, each column a SNP, and fields are
- comma separated, a `?`, denotes missing data, 0,1, 2 denote
- 0,1 or 2 copies of the allele. The very first column gives
- the name of the individual
-
-
- 2) coords_file 
- coords_file: each sample is a row, except header
-   (first row). 1st column is the id of the individual,
-   which should match the snp_file. Columns titled `latitude`
-   and `longitude` give sample coordinates, others are ignored
-
-
- 3) outgroup_file: outgroup data, optional, only for arabidopsis
-   as the analysis requires knowledge of the ancestral state
-   of a snp, some outgroups might be used to infer that. If
-   the data is already encoded in derived allele frequency,
-   you won't need this file.
-
-   the first 3 columns are:
-   1: SNP id (same as in the snp_file)
-   2: chromosome
-   3: snp position
 
 
 Overview of steps
@@ -117,7 +114,7 @@ Overview of steps
    SNP data for each individual, groups them in pop-
    ulations of arbitrary size (but at least 1 diploid 
    per population is required). 
- 2. After that, a directionalit statistc is calculated 
+ 2. After that, a directionality statistic is calculated 
    for all pairs of populations, and a file with the 
    location for each population is generated. 
 
@@ -129,73 +126,46 @@ Overview of steps
 
 
 
-## Paramters for the analysis (example)
-*NOTE: chance these for your data set in re_analysis.r*
+## Example analysis
+#### Specify File Names
+First, we need to specify the files
+    snp.file <- "example_data/example_snp.bed"
+    coord.file <- "example_data/example_coordinates.csv" 
 
-the following lines contain the arguments that might be set
-alternatively, the snp_file and coords_file are loaded from
-the command line as the first two arguments, i.e. running
+Note that the bim and fam files will be automatically found by the `snpStats::read.plink` function.
 
-    Rscript re_analysis.r [snp_file] [coords_file]
+#### Specify Options
 
-the name of the input file, 
+    ploidy <- 2 #assume our organism is diploid
+    nsnp <- NULL # assume we want to analyze all SNPs in the data set
 
-    snp_file <- "example_data/example_snp.snapp"
+    # we want two runs, one with all individuals in REGION_1, and one
+    # with individuals in either REGION_2 or REGION_3
+    regions <- list("REGION_1",
+                    c("REGION_2", "REGION_3"))
 
-the name of the file specifying location, with extension
-
-    coords_file <- "example_data/example_coordinates.csv" #replaced by cmdline arg 2
-
-whether data set needs to be loaded, if they are already in the R environment, setting
-this to `FALSE` will save a lot of time
-
-    load_data <- True
-
-if `FALSE` functions are loaded, but no code is executed
-
-    run_analysis <- True
-
-##### Regions
-Regions are sets of populations that can be analyzed independently, i.e. they correspond
-to clusters that a priory are thought to have a different origin.
-Each list entry corresponds to an analysis, i. e. the following command
-will analyze the populations `REGION_1`, `REGION_2` and `REGION_3` individually, but will
-also jointly analyze `REGION_1` and `REGION_2`.
-
-    regions_to_analyze <- list("REGION_1", "REGION_2", "REGION_3", 
-                        c("REGION_1", "REGION_2"))
-
-if `TRUE`, heterozygostity and FST plots are generated (note that I use BEDASSLE
-to calculate pairwise FST, and that BEDASSLE is, as of Dec 3 2014, not yet available
-for 3.1.1, but this should work for older versions of R)
-
-    run_additional_analyses <- FALSE
-
-    n_points <- 4   #how many points on the map should be evaluated
-                 # higher numbers increase runtime and accuracy
-
-    ploidy <- 2  #set ploidy of individuals. 1=haploid, 2 =diploid
-
-which columns contain outgroup individuals (snapp format)
-to be used for polarization of SNPs. If SNP are already polarized
-or no outgroups are present, set this to `NULL`:
-    # outgroup_columns <- NULL 
-
-    outgroup_columns <- 1:2  
-
-the maximum number of snp to analyze, NULL loads all SNP
-
-    nsnp <- NULL
-
-if you want to run the arabidopsis example instead, set this to True
-, file names will be adjusted
-
-    run_arabidopsis_example <- TRUE
+    n_points <- 20 # at how many points should the function by analyzed?
 
 
-downloads arabidopsis data, requires wget. As the arabidopsis data set is around
-400MB, I did not include it, run this *once* to download the data
+#### Load Individual Level Data
+    snp.data <- load.plink.file(snp.file)
+    coord.data <- load.coord.file(coord.file, sep=',')
+    raw.data <- check.missing(snp.data, coord.data)
+    raw.data <- set.outgroups(raw.data, ploidy)
+    pops <- make.pops(raw.data)
+#### Generate Population Level Data
+    pop_data <- make_pop_data_from_pops( pops, raw.data )
+    pop_coords <- make_pop_coords_from_pops( pops, coords)
+    pop_ss <- make_pop_ss_from_pops( pops, data, ploidy=ploidy)
+    pop_coords <- cbind( pop_coords, hets=get_heterozygosity(pop_data, pop_ss))
+#### Run Analyses
+    all_psi <- get_all_psi(pop_data, pop_ss ,n=2)
+    # write.table(all_psi,psi_name,col.names=F,row.names=F)
+    # write.table(pop_coords, coords_name, col.names=T,
+    #        row.names=F)
 
-    download_arabidopsis_data <- FALSE
+    run_region( region=region, xlen=n_points, ylen=n_points )
+    write.table(res.tbl, sprintf("table_%s.txt", out_file_id), col.names=T,row.names=F)
+
 
 

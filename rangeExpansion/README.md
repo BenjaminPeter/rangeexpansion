@@ -138,6 +138,7 @@ Finally, we want to find the origins, using `run.regions`:
     results <- run.regions(region=region, pop=pop, xlen=10, ylen=20)
 
 To analyze the results, we use the functions `summary` and `plot`:
+
 `summary` gives a table with some statistcs, while plot gives a visual
 representation of the results
 

@@ -321,7 +321,7 @@ print( "finished step 2")
 pop_data <- make_pop_data_from_pops( pops, data )
 pop_coords <- make_pop_coords_from_pops( pops, coords)
 pop_ss <- make_pop_ss_from_pops( pops, data, ploidy=ploidy)
-pop_coords <- cbind( pop_coords, hets=get_heterozygosity(pop_data))
+pop_coords <- cbind( pop_coords, hets=get_heterozygosity(pop_data, pop_ss))
 
 print( "finished step 3")
 #--------------------------------------------------
