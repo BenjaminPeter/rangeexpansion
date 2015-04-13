@@ -21,14 +21,18 @@ A list with entries
 Groups up raw data into a data structure that
 }
 \examples{
-\dontrun{
-f = system.file("examples/example.data.bed", package="rangeExpansion")
-c = system.file("examples/example.coordinates.csv", package="rangeExpansion")
-coord.data <- load.coord.file(c, sep=",")
-snp.data <- load.plink.file(f, sep=",")
-raw.data <- check.missing(snp.data, coord.data)
-raw.data <- set.outgroups(raw.data)
-pop <- make.pop(raw.data)
-}
+region <- list(NULL, c("REGION_1", "REGION_2"))
+
+raw.data <- load.data.snapp("examples/example_snp.snapp", 
+                            "examples/example_coordinates.csv", 
+                            sep=',', ploidy=ploidy)                                
+
+pop <- make.pop(raw.data, ploidy)
+psi <- get.all.psi(pop)
+
+res <- run.regions(region=region, pop=pop, psi=psi, xlen=10,ylen=20)
+
+summary(res)
+plot(res)
 }
 

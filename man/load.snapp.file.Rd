@@ -7,16 +7,16 @@
 load.snapp.file(snp.file = "../example_data/example_snp.snapp", n.snp = -1)
 }
 \description{
-Deprecatedu, use plink input format instead
+Deprecated, use plink input format instead
 }
 \examples{
 region <- list(NULL, c("REGION_1", "REGION_2"))
 
-raw.data <- load.data.snapp("../example_data/example_snp.snapp", 
-                            "../example_data/example_coordinates.csv", 
-                            sep=',')                                
+raw.data <- load.data.snapp("examples/example_snp.snapp", 
+                            "examples/example_coordinates.csv", 
+                            sep=',', ploidy=ploidy)                                
 
-pop <- make.pop(raw.data)
+pop <- make.pop(raw.data, ploidy)
 psi <- get.all.psi(pop)
 
 res <- run.regions(region=region, pop=pop, psi=psi, xlen=10,ylen=20)

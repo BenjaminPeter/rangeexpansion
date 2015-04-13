@@ -22,7 +22,7 @@ get.psi(ni, nj, fi, fj, n = 2, resampling = "hyper")
 \item{n}{the number of samples to downsample to}
 }
 \value{
-psi
+psi a matrix of pairwise psi values
 }
 \description{
 the psi statistic calculation
@@ -30,5 +30,20 @@ the actual calculation of the psi statistic for
 a single pair of populations. The function requires
 4 vectors, all of length equal to the number of snps
 to be analyzed.
+}
+\examples{
+region <- list(NULL, c("REGION_1", "REGION_2"))
+
+raw.data <- load.data.snapp("examples/example_snp.snapp", 
+                            "examples/example_coordinates.csv", 
+                            sep=',', ploidy=ploidy)                                
+
+pop <- make.pop(raw.data, ploidy)
+psi <- get.all.psi(pop)
+
+res <- run.regions(region=region, pop=pop, psi=psi, xlen=10,ylen=20)
+
+summary(res)
+plot(res)
 }
 
