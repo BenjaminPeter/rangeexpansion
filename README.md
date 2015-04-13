@@ -22,6 +22,17 @@ on how to install it. In brief, you should be able to run
 Other dependencies are `geosphere` for haversine distance, and 
 `rworldmap` for plotting of a map
 
+## Install
+The easiest way to install the package is using `devtools::install_github`:
+
+    devtools::install_github("BenjaminPeter/rangeExpansion", ref="package")
+    library(rangeExpansion)
+
+The example given here can then be run using
+
+    example(run.regions)
+    
+
 
 ### File Format Descriptions & Modifiers
 there are two required files, one file contains genetic data and one
