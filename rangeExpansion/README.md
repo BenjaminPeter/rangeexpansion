@@ -32,7 +32,8 @@ containing location information.
 see http://pngu.mgh.harvard.edu/~purcell/plink2/formats.html
 for reference. This file is perhaps easiest generated using
 plink 1.9. For example, from vcf data, use
-plink --vcf my.vcf --set-missing-var-ids "@_#" --make-bed --out new --allow-extra-chr
+
+    plink --vcf my.vcf --set-missing-var-ids "@_#" --make-bed --out new --allow-extra-chr
 to generate a bed file.
 ###### snp file (snapp format)
 alternatively, data can be loaded using a similar format to the SNAPP
@@ -69,10 +70,6 @@ there are three main steps to this program:
 ###### Outgroups
 Outgroup Individuals are individuals assumed to be ancestral to the population of interest.
 Their alleles can be used to determine the most likely ancestral state of an allele.
-If more than one outgroup is specified, there might be disagreements between the state
-of the outgroup. In this case, there are two options:
-    outgroup.disagreement = 'remove' #removes SNP whose ancestral state is ambiguous
-    outgroup.disagreement = 'majority' # remove ties, keep SNP with majority for an allele
 ######    Regions
 Regions are sets of populations that can be analyzed independently, i.e. they correspond
 to clusters that a priory are thought to have a different origin.
@@ -113,26 +110,31 @@ all vectors have length equal to the number of snp
 ## Example analysis
 #### Specify File Names
 First, we need to specify the files we want to load
+
     snp.file <- "examples/example_snp.snapp
     coord.file <- "examples/example_coordinates.csv" 
 
 We also need to specify the ploidy and which regions we want to analyze
 Suppose we want to analyze all individuals, and those which we assigned
 to individuals in "REGION_1", and "REGION_2":
+
     ploidy <- 2 #diploid individuals
     region <- list(NULL, 
                    c("REGION_1", "REGION_2"))
 
 Since the coordination file is csv, we add the argument `sep=','`:
+
     raw.data <- load.data.snapp(snp.file, coord.file, sep=',', 
                                 ploidy=ploidy)
 
 Then, we calculate the population-level data from individual data
 and calculate all pairwise statistics:
+
     pop <- make.pop(raw.data, ploidy)
     psi <- get.all.psi(pop)
 
 Finally, we want to find the origins, using `run.regions`:
+
     results <- run.regions(region=region, pop=pop, xlen=10, ylen=20)
 
 To analyze the results, we use the functions `summary` and `plot`:
@@ -142,6 +144,7 @@ representation of the results
 #### Summary Function
 
 running the summary in the example should give a result like this:
+
          |         ALL|REGION_1+REGION_2
 -------- |---------:  | --------------:
 longitude|    125.5317|         136.0681
