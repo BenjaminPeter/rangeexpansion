@@ -126,6 +126,7 @@ read.data.ms <- function(){
 load.coord.file <- function(file, ...){
     coords <- read.table(file, header=T, strings=F, ...)
     names(coords)[1] <- 'id'
+    coords[,1] <- as.character(coords[,1])
     return(coords)
 }
 
